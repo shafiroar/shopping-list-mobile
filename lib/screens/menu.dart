@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:shopping_list/screens/shoplist_form.dart';
+import 'package:shopping_list/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
+   MyHomePage({Key? key}) : super(key: key);
   final List<ShopItem> items = [
     ShopItem("Lihat Produk", Icons.checklist),
     ShopItem("Tambah Produk", Icons.add_shopping_cart),
     ShopItem("Logout", Icons.logout),
-  ];
-
+];
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -18,15 +18,18 @@ class MyHomePage extends StatelessWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Shopping List',
         ),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+        
       ),
+      drawer : const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -88,10 +91,18 @@ class ShopCard extends StatelessWidget {
         // Area responsive terhadap sentuhan
         onTap: () {
           // Memunculkan SnackBar ketika diklik
+          // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          // Navigate ke route yang sesuai (tergantung jenis tombol)
+          if (item.name == "Tambah Produk") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ShopFormPage()));
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
